@@ -1,0 +1,8 @@
+{
+  "item.my_mod.my_block_item": "My Block",
+  "block.my_mod.my_block": "My Block",
+  "item.my_mod.build_block_item" : "Build Block",
+  "block.my_mod.build_block" : "Build Block",
+  "item.my_mod.start_block_item" : "Start Block",
+  "block.my_mod.start_block" : "Start Block"
+}

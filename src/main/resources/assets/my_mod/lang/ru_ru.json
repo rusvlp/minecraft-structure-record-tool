@@ -1,0 +1,8 @@
+{
+  "item.my_mod.my_block_item": "Мой блок",
+  "block.my_mod.my_block": "Мой блок",
+  "item.my_mod.build_block_item" : "Строительный блок",
+  "block.my_mod.build_block" : "Строительный блок",
+  "item.my_mod.start_block_item" : "Стартовый блок",
+  "block.my_mod.start_block" : "Стартовый блок"
+}

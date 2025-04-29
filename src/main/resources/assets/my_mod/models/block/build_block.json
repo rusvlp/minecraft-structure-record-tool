@@ -1,0 +1,25 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "my_mod:block/build_block",
+    "up": "my_mod:block/build_block",
+    "north": "my_mod:block/build_block",
+    "south": "my_mod:block/build_block",
+    "east": "my_mod:block/build_block",
+    "west": "my_mod:block/build_block"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "texture": "#down", "cullface": "down" },
+        "up":    { "texture": "#up", "cullface": "up" },
+        "north": { "texture": "#north", "cullface": "north" },
+        "south": { "texture": "#south", "cullface": "south" },
+        "west":  { "texture": "#west", "cullface": "west" },
+        "east":  { "texture": "#east", "cullface": "east" }
+      }
+    }
+  ]
+}
