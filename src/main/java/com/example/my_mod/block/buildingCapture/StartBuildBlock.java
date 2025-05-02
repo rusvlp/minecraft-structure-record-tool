@@ -20,28 +20,28 @@ public class StartBuildBlock extends Block {
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
 
-        WriteCoordsToFileHelper.getInstance().ifPresentOrElse(
-                h -> {
-                    if (!h.isStartBlockSet()){
-                        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
-                        h.setStartBlock(pPos);
-                        CommandHelper.sendMessageToChat("Стартовый блок установлен");
-                    } else {
-                        CommandHelper.sendMessageToChat("Стартовый блок уже установлен. Для установки нового сломайте предыдущий");
-                        ExampleMod.removeBlockByPosition(pPos);
-                    }
-                },
-                () -> ExampleMod.removeBlockByPosition(pPos)
-        );
+//        WriteCoordsToFileHelper.getInstance().ifPresentOrElse(
+//                h -> {
+//                    if (!h.isStartBlockSet()){
+//                        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
+//                        h.setStartBlock(pPos);
+//                        CommandHelper.sendMessageToChat("Стартовый блок установлен");
+//                    } else {
+//                        CommandHelper.sendMessageToChat("Стартовый блок уже установлен. Для установки нового сломайте предыдущий");
+//                        ExampleMod.removeBlockByPosition(pPos);
+//                    }
+//                },
+//                () -> ExampleMod.removeBlockByPosition(pPos)
+//        );
     }
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-        WriteCoordsToFileHelper.getInstance().ifPresent(h -> {
-           h.removeStartBlock();
-           CommandHelper.sendMessageToChat("Стартовый блок удален");
-        });
+//        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+//        WriteCoordsToFileHelper.getInstance().ifPresent(h -> {
+//           h.removeStartBlock();
+//           CommandHelper.sendMessageToChat("Стартовый блок удален");
+//        });
     }
 
 

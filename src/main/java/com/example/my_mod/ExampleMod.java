@@ -144,19 +144,19 @@ public class ExampleMod
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
+
+        @SubscribeEvent
+        public void onBlockPlace(){
+            LOGGER.info("HELLO FROM BLOCK PLACE");
+        }
     }
 
     public static void removeBlockByPosition(BlockPos pos){
         Level level = Minecraft.getInstance().level;
 
         if (level != null){
-            CommandHelper.sendMessageToChat("isClient: "+ level.isClientSide());
-            for (int i = 0; i<1000; i++){
-                level.removeBlock(pos, false);
-            }
-
+            level.removeBlock(pos, false);
         }
-        CommandHelper.sendMessageToChat("Удаляю блок " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 
     }
 

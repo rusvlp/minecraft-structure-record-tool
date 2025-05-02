@@ -1,8 +1,11 @@
 package com.example.my_mod.utils;
 
+import com.example.my_mod.ExampleMod;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 
+import java.io.IOException;
 import java.util.*;
 
 public class WriteCoordsToFileHelper {
@@ -29,6 +32,7 @@ public class WriteCoordsToFileHelper {
 
     private WriteCoordsToFileHelper(String filename) {
         this.filename = filename;
+        startBlockPos = null;
     }
 
     public void setStartBlock(BlockPos pos) {
@@ -45,15 +49,23 @@ public class WriteCoordsToFileHelper {
         this.startBlockPos = null;
     }
 
-    private void save(){
-        // Write to file
+    private void save() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.blocks);
+        System.out.println(json);
+        CommandHelper.sendMessageToChat("SAVING FROM SAVE FUNCTION");
     }
 
     public void addBlock(BlockPos pos, Class<? extends Block> clazz){
         if (startBlockPos == null){
             throw new NoStartBlockException();
         }
-        blocks.put(pos, clazz);
+        BlockPos newPos = startBlockPos.offset(startBlockPos);
+        blocks.put(newPos, clazz);
+    }
+
+    public boolean containsBlock(BlockPos pos){
+        return blocks.containsKey(pos);
     }
 
     public void removeBlock(BlockPos pos){
@@ -64,8 +76,9 @@ public class WriteCoordsToFileHelper {
         return startBlockPos != null;
     }
 
-    public void endCapture(){
+    public void endCapture() throws IOException {
         save();
+        ExampleMod.removeBlockByPosition(startBlockPos);
         previousCaptures.add(this);
         instance = null;
     }

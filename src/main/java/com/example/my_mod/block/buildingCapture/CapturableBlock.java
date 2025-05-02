@@ -18,23 +18,23 @@ public abstract class CapturableBlock extends Block {
 
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        Optional<WriteCoordsToFileHelper> heplerOptional = WriteCoordsToFileHelper.getInstance();
-        if (!heplerOptional.isPresent()) {
-            CommandHelper.sendMessageToChat("Запись не ведется");
-            return;
-        }
-        WriteCoordsToFileHelper helper = heplerOptional.get();
-        if (!helper.isStartBlockSet()){
-            CommandHelper.sendMessageToChat("Стартовый блок не установлен");
-            return;
-        }
-        helper.addBlock(pPos, this.getClass());
-        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
+//        Optional<WriteCoordsToFileHelper> heplerOptional = WriteCoordsToFileHelper.getInstance();
+//        if (!heplerOptional.isPresent()) {
+//            CommandHelper.sendMessageToChat("Запись не ведется");
+//            return;
+//        }
+//        WriteCoordsToFileHelper helper = heplerOptional.get();
+//        if (!helper.isStartBlockSet()){
+//            CommandHelper.sendMessageToChat("Стартовый блок не установлен");
+//            return;
+//        }
+//        helper.addBlock(pPos, this.getClass());
+//        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
     }
 
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+//        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 }

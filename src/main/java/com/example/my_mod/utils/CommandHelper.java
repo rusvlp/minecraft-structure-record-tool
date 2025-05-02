@@ -12,6 +12,9 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.io.IOException;
+import java.util.Optional;
+
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommandHelper {
     @SubscribeEvent
@@ -43,11 +46,22 @@ public class CommandHelper {
         return 1;
     }
 
-    private static int processStopCaptureCommand(CommandContext<CommandSourceStack> context){
+
+    private static int processStopCaptureCommand(CommandContext<CommandSourceStack> context) throws IOException{
+
+        Optional<WriteCoordsToFileHelper> helperOptional = 
+
+
         WriteCoordsToFileHelper.getInstance().ifPresentOrElse(
                 helper -> {
                     context.getSource().sendSuccess(() -> Component.literal("Запись остановлена"), false);
-                    helper.endCapture();
+                    try {
+                        helper.endCapture();
+                    } catch (IOException e) {
+                        context.getSource().sendSuccess(() -> Component.literal("Не удалось сериализовать данные"), false);
+                        e.printStackTrace();
+                    }
+
                 },
                 () -> context.getSource().sendSuccess(() -> Component.literal("Запись не была начата"), false)
         );
