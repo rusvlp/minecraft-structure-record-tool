@@ -1,9 +1,13 @@
 package com.example.my_mod;
 
+import com.example.my_mod.block.buildingCapture.StartBuildBlock;
 import com.example.my_mod.utils.CommandHelper;
 import com.example.my_mod.utils.WriteCoordsToFileHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,18 +19,19 @@ import java.util.Optional;
 public class EventHandler {
     @SubscribeEvent
     public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+
         if (!(event.getEntity() instanceof Player)) return;
 
         BlockPos pos = event.getPos();
-        BlockState block = event.getPlacedBlock();
+        BlockState blockState = event.getPlacedBlock();
+        Block block = blockState.getBlock();
+        if (blockState.getBlock() instanceof StartBuildBlock) return;
 
-
-
+        ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(block);
         WriteCoordsToFileHelper.getInstance().ifPresent(
                 helper -> {
                     if (helper.isStartBlockSet()){
-                        helper.addBlock(pos, block.getBlock().getClass());
-                        CommandHelper.sendMessageToChat("Блок записан " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+                        helper.addBlock(pos, loc);
                     }
                 }
         );

@@ -4,6 +4,7 @@ import com.example.my_mod.ExampleMod;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -17,6 +18,8 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommandHelper {
+
+
     @SubscribeEvent
     public static void onCommandRegister(RegisterCommandsEvent event){
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
@@ -24,7 +27,7 @@ public class CommandHelper {
 
         dispatcher.register(
                 Commands.literal("startCapture")
-                        .then(Commands.argument("path", StringArgumentType.word())
+                        .then(Commands.argument("path", StringArgumentType.greedyString())
                                 .executes(CommandHelper::processStartCaptureCommand) // <- теперь здесь
                         )
         );
@@ -47,24 +50,24 @@ public class CommandHelper {
     }
 
 
-    private static int processStopCaptureCommand(CommandContext<CommandSourceStack> context) throws IOException{
 
-        Optional<WriteCoordsToFileHelper> helperOptional = 
+    private static int processStopCaptureCommand(CommandContext<CommandSourceStack> context){
 
+        Optional<WriteCoordsToFileHelper> helperOptional = WriteCoordsToFileHelper.getInstance();
+        if (helperOptional.isEmpty()){
+            context.getSource().sendSuccess(() -> Component.literal("Запись не была начата"), false);
+            return 1;
+        }
 
-        WriteCoordsToFileHelper.getInstance().ifPresentOrElse(
-                helper -> {
-                    context.getSource().sendSuccess(() -> Component.literal("Запись остановлена"), false);
-                    try {
-                        helper.endCapture();
-                    } catch (IOException e) {
-                        context.getSource().sendSuccess(() -> Component.literal("Не удалось сериализовать данные"), false);
-                        e.printStackTrace();
-                    }
+        WriteCoordsToFileHelper helper = helperOptional.get();
+        try {
+            helper.endCapture();
+        } catch (IOException e){
+            context.getSource().sendSuccess(() -> Component.literal("Не удалось сериализовать данные"), false);
+            return 1;
+        }
 
-                },
-                () -> context.getSource().sendSuccess(() -> Component.literal("Запись не была начата"), false)
-        );
+        context.getSource().sendSuccess(() -> Component.literal("Запись остановлена"), false);
         return 1;
     }
 
