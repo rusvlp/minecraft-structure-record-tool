@@ -1,8 +1,7 @@
 package com.example.my_mod.block.custom;
 
-import com.example.my_mod.block.annotations.PlaceStructure;
+import com.example.my_mod.utils.annotations.PlaceStructure;
 import com.example.my_mod.block.entities.MyBlockEntity;
-import com.google.j2objc.annotations.ObjectiveCName;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,22 +12,13 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CubeVoxelShape;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
-import static com.example.my_mod.ExampleMod.MODID;
 
-
-@PlaceStructure("./some.json")
+@PlaceStructure("C:\\Users\\Vlad\\Documents\\my_blocks.json")
 public class MyBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
     public static final int variable = 0;

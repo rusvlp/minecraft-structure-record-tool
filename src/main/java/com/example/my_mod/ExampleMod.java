@@ -6,6 +6,7 @@ import com.example.my_mod.block.custom.MyBlock;
 import com.example.my_mod.item.ModItems;
 import com.example.my_mod.item.blockItems.MyBlockItem;
 import com.example.my_mod.utils.CommandHelper;
+import com.example.my_mod.utils.CoordsFileReader;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -103,6 +104,8 @@ public class ExampleMod
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        CoordsFileReader.initialize();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
