@@ -1,5 +1,6 @@
 package com.example.my_mod.block.custom;
 
+import com.example.my_mod.block.annotations.PlaceStructure;
 import com.example.my_mod.block.entities.MyBlockEntity;
 import com.google.j2objc.annotations.ObjectiveCName;
 import net.minecraft.core.BlockPos;
@@ -26,6 +27,8 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.example.my_mod.ExampleMod.MODID;
 
+
+@PlaceStructure("./some.json")
 public class MyBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
     public static final int variable = 0;
