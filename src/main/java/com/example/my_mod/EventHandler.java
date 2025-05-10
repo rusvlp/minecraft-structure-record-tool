@@ -47,6 +47,7 @@ public class EventHandler {
         BlockState blockState = event.getPlacedBlock();
         Block block = blockState.getBlock();
         Map<BlockPos, Block> blocks = CoordsFileReader.getStructureByBLock(block);
+        if (blocks == null) return;
         for (Map.Entry<BlockPos, Block> entry: blocks.entrySet()){
             Minecraft.getInstance().level.setBlock(entry.getKey(), entry.getValue().defaultBlockState(), 2);
         }
