@@ -3,6 +3,7 @@ package com.example.my_mod;
 import com.example.my_mod.block.buildingCapture.StartBuildBlock;
 import com.example.my_mod.utils.CommandHelper;
 import com.example.my_mod.utils.CoordsFileReader;
+import com.example.my_mod.utils.UtilMethods;
 import com.example.my_mod.utils.WriteCoordsToFileHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -46,10 +47,15 @@ public class EventHandler {
     private static void handleStructurePlacement(BlockEvent.EntityPlaceEvent event){
         BlockState blockState = event.getPlacedBlock();
         Block block = blockState.getBlock();
+        BlockPos centerPos = event.getPos();
         Map<BlockPos, Block> blocks = CoordsFileReader.getStructureByBLock(block);
         if (blocks == null) return;
+        System.out.println("Setting structure placement for " + block.getClass().getSimpleName());
         for (Map.Entry<BlockPos, Block> entry: blocks.entrySet()){
-            Minecraft.getInstance().level.setBlock(entry.getKey(), entry.getValue().defaultBlockState(), 2);
+            BlockPos pos = entry.getKey();
+            Block blockToPlace = entry.getValue();
+            System.out.println("Trying to set block " + blockToPlace.getClass().getSimpleName() + " at " + pos);
+            Minecraft.getInstance().level.setBlock(UtilMethods.negativeOffset(centerPos, pos), entry.getValue().defaultBlockState(), 2);
         }
     }
 

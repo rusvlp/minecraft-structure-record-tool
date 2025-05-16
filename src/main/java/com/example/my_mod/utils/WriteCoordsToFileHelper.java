@@ -47,7 +47,7 @@ public class WriteCoordsToFileHelper {
     public void setStartBlock(BlockPos pos) {
         this.startBlockPos = pos;
         for (Map.Entry<BlockPos, ResourceLocation> entry : blocks.entrySet()) {
-            BlockPos newPos = entry.getKey().offset(startBlockPos);
+            BlockPos newPos = UtilMethods.negativeOffset(startBlockPos, entry.getKey());
             ResourceLocation loc = entry.getValue();
             blocks.put(newPos, loc);
         }
@@ -92,10 +92,11 @@ public class WriteCoordsToFileHelper {
         if (startBlockPos == null){
             throw new NoStartBlockException();
         }
-        BlockPos newPos = startBlockPos.offset(pos);
+        BlockPos newPos = UtilMethods.negativeOffset(startBlockPos, pos);
         CommandHelper.sendMessageToChat("Блок записан " + newPos.getX() + " " + newPos.getY() + " " + newPos.getZ() + ", " + loc);
         blocks.put(newPos, loc);
     }
+
 
     public boolean containsBlock(BlockPos pos){
         return blocks.containsKey(pos);

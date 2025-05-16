@@ -37,6 +37,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ExampleMod.MODID)
 public class ExampleMod
@@ -66,6 +70,14 @@ public class ExampleMod
 
     public ExampleMod(FMLJavaModLoadingContext context)
     {
+
+        Supplier<List<Integer>> splr = new Supplier<List<Integer>>() {
+
+            @Override
+            public List<Integer> get() {
+                return List.of();
+            }
+        };
         IEventBus modEventBus = context.getModEventBus();
 
         // Register the commonSetup method for modloading
@@ -105,7 +117,7 @@ public class ExampleMod
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
-        CoordsFileReader.initialize();
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -146,6 +158,7 @@ public class ExampleMod
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            CoordsFileReader.initialize();
         }
 
         @SubscribeEvent

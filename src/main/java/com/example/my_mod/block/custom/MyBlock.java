@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 
-@PlaceStructure("C:\\Users\\Vlad\\Documents\\my_blocks.json")
+@PlaceStructure("C:\\Users\\Vlad\\Documents\\blocks2.json")
 public class MyBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
     public static final int variable = 0;

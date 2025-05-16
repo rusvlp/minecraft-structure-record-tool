@@ -1,9 +1,11 @@
 package com.example.my_mod.utils;
 
 import com.example.my_mod.utils.annotations.PlaceStructure;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.json.Json;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class CoordsFileReader {
     public static Map<Block, Map<BlockPos, Block>> blockPositions = new HashMap<>();
 
@@ -21,16 +24,20 @@ public class CoordsFileReader {
         return blockPositions.get(block);
     }
 
-    public static void initialize(){
+    public static void initialize()  {
+        System.out.println("Initializing CoordsFileReader");
         for (Block block : ForgeRegistries.BLOCKS.getValues()) {
             Class<? extends Block> clazz = block.getClass();
+            System.out.println(clazz.getName());
             if (clazz.isAnnotationPresent(PlaceStructure.class)){
                 PlaceStructure ann = clazz.getDeclaredAnnotation(PlaceStructure.class);
                 String path = ann.value();
                 Map<BlockPos, Block> blocks = getBlocksByJson(path);
+                System.out.println("Found place structure block " + clazz.getSimpleName());
                 blockPositions.put(block, blocks);
             }
         }
+
     }
 
     private static Map<BlockPos, Block> getBlocksByJson(String path){
@@ -49,7 +56,7 @@ public class CoordsFileReader {
                 int y = Integer.parseInt(parts[1]);
                 int z = Integer.parseInt(parts[2]);
 
-                ResourceLocation loc = ResourceLocation.parse(path);
+                ResourceLocation loc = ResourceLocation.parse(blockId);
                 Block block = ForgeRegistries.BLOCKS.getValue(loc);
 
                 BlockPos pos = new BlockPos(x, y, z);
